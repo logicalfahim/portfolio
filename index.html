@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fahimul Islam Fahim - WordPress Developer Portfolio</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Google Fonts (Poppins for headings, Inter for body) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Load Lucide Icons for skills/features -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- WhatsApp Icon from Font Awesome (kept for social links) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <!-- Tailwind Configuration and CSS Variables (Neo Minimal Palette) -->
+    <style>
+        :root {
+            /* Header Height for scroll offset */
+            --header-height: 80px;
+
+            /* Neo Minimal LIGHT Theme */
+            --bg-color-light: #FFFFFF;
+            --surface-color-light: #F8F8F8; /* Soft Gray */
+            --text-color-primary-light: #111111;
+            --text-color-secondary-light: #555555;
+            --border-color-light: #E6E6E6;
+
+            /* Neo Minimal DARK Theme (Softened) */
+            --bg-color-dark: #121212; /* Very dark gray, not pure black */
+            --surface-color-dark: #1F1F1F;
+            --text-color-primary-dark: #F8F8F8;
+            --text-color-secondary-dark: #A0A0A0;
+            --border-color-dark: #333333;
+
+            /* Accent Color (Solid) */
+            --accent-color: #6C63FF;
+        }
+
+        /* Default (Light) theme styles */
+        .light {
+            background-color: var(--bg-color-light);
+            color: var(--text-color-primary-light);
+        }
+        .light .bg-surface { background-color: var(--surface-color-light); }
+        .light .text-primary { color: var(--text-color-primary-light); }
+        .light .text-secondary { color: var(--text-color-secondary-light); }
+        .light .card-border { border-color: var(--border-color-light); }
+        /* Softer Shadow */
+        .light .card-shadow { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04), 0 1px 4px rgba(0, 0, 0, 0.02); }
+
+        /* Dark theme styles */
+        .dark {
+            background-color: var(--bg-color-dark);
+            color: var(--text-color-primary-dark);
+        }
+        .dark .bg-surface { background-color: var(--surface-color-dark); }
+        .dark .text-primary { color: var(--text-color-primary-dark); }
+        .dark .text-secondary { color: var(--text-color-secondary-dark); }
+        .dark .card-border { border-color: var(--border-color-dark); }
+        /* Softer glow in dark mode */
+        .dark .dark-glow { box-shadow: 0 0 20px rgba(108, 99, 255, 0.1); }
+        .dark .card-shadow { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), 0 1px 4px rgba(0, 0, 0, 0.1); }
+        
+        /* Apply CSS variables via utility classes */
+        .header-bg { background-color: var(--bg-color-light); }
+        .dark .header-bg { background-color: var(--bg-color-dark); }
+        .accent-bg { background-color: var(--accent-color); }
+        .accent-text { color: var(--accent-color); }
+        .accent-border { border-color: var(--accent-color); }
+
+        /* Subtle Noise Overlay for Neo Minimal depth (Opacity reduced to 2%) */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.02) 50%, transparent 50%),
+                              linear-gradient(90deg, rgba(0, 0, 0, 0.02) 50%, transparent 50%);
+            background-size: 4px 4px;
+            opacity: 0.8;
+        }
+        .dark body::before {
+            background-image: linear-gradient(0deg, rgba(255, 255, 255, 0.04) 50%, transparent 50%),
+                              linear-gradient(90deg, rgba(255, 255, 255, 0.04) 50%, transparent 50%);
+            opacity: 0.15;
+        }
+        
+        /* Hero background blobs for depth */
+        .hero-blob-1 {
+            position: absolute;
+            top: 10%;
+            left: 5%;
+            width: 200px;
+            height: 200px;
+            background: rgba(108, 99, 255, 0.06); /* Soft Lavender */
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: float 10s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        .hero-blob-2 {
+            position: absolute;
+            bottom: 10%;
+            right: 15%;
+            width: 300px;
+            height: 300px;
+            background: rgba(76, 227, 255, 0.06); /* Soft Blue */
+            border-radius: 50%;
+            filter: blur(100px);
+            animation: float 12s reverse ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-20px) translateX(20px); }
+        }
+
+        /* Custom scroll behavior and header offset for smooth anchor links */
+        html {
+            scroll-behavior: smooth;
+        }
+        .scroll-offset {
+            /* Prevents sticky header overlap */
+            scroll-margin-top: var(--header-height);
+            padding-top: 2rem; /* Ensure padding on top of section content */
+        }
+        
+        /* Custom font families */
+        .font-heading { font-family: 'Poppins', sans-serif; }
+        .font-body { font-family: 'Inter', sans-serif; }
+
+        /* Cinematic Animation with custom easing */
+        .animate-fade-in {
+            opacity: 0;
+            transform: translateY(24px); 
+            /* Custom cubic-bezier for a premium, smooth feel */
+            transition: opacity 0.6s cubic-bezier(0.25, 0.1, 0.25, 1), transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+        .animate-in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reduced-motion .animate-fade-in {
+            transition: none !important;
+            transform: none !important;
+            opacity: 1 !important;
+        }
+        
+        /* Floating Social Bar Styles */
+        .floating-social-bar {
+            position: fixed;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            z-index: 40;
+            /* Neo Minimal Style */
+            background-color: var(--surface-color-light);
+            border-left: 1px solid var(--border-color-light);
+            border-top-left-radius: 12px;
+            border-bottom-left-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: background-color 0.5s, border-color 0.5s;
+        }
+
+        .dark .floating-social-bar {
+            background-color: var(--surface-color-dark);
+            border-left: 1px solid var(--border-color-dark);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .social-link {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            color: var(--text-color-secondary-light);
+            transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+            cursor: pointer;
+        }
+
+        .dark .social-link {
+            color: var(--text-color-secondary-dark);
+        }
+
+        .social-link:hover {
+            color: var(--accent-color);
+        }
+    </style>
+    
+    <!-- Script to extend Tailwind theme for custom colors (optional but good practice) -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-text': 'var(--text-color-primary-light)',
+                        'secondary-text': 'var(--text-color-secondary-light)',
+                        'surface': 'var(--surface-color-light)',
+                        'border-color': 'var(--border-color-light)',
+                    },
+                    screens: {
+                        'xs': '480px',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="font-body transition-colors duration-500 min-h-screen">
+    <header id="header" class="fixed top-0 left-0 right-0 z-40 shadow-lg header-bg transition-colors duration-500 h-20 flex items-center border-b border-border-color">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 w-full flex justify-between items-center">
+            <!-- Logo/Name -->
+            <a href="#hero" class="text-2xl font-heading font-bold accent-text transition-opacity duration-300 hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#6C63FF]">
+                Fahimul Islam Fahim
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden lg:flex space-x-10" aria-label="Main navigation">
+                <a href="#hero" class="text-primary hover:text-[#6C63FF] transition-colors duration-200 font-medium tracking-wide">Home</a>
+                <a href="#about" class="text-primary hover:text-[#6C63FF] transition-colors duration-200 font-medium tracking-wide">About</a>
+                <a href="#skills" class="text-primary hover:text-[#6C63FF] transition-colors duration-200 font-medium tracking-wide">Skills</a>
+                <a href="#experience" class="text-primary hover:text-[#6C63FF] transition-colors duration-200 font-medium tracking-wide">Experience</a>
+                <a href="#projects" class="text-primary hover:text-[#6C63FF] transition-colors duration-200 font-medium tracking-wide">Projects</a>
+                <a href="#contact" class="text-primary hover:text-[#6C63FF] transition-colors duration-200 font-medium tracking-wide">Contact</a>
+            </nav>
+
+            <!-- Theme Toggle & Hamburger -->
+            <div class="flex items-center space-x-4">
+                <!-- Theme Toggle Button -->
+                <button id="theme-toggle" aria-label="Toggle dark mode" class="p-2 rounded-xl text-primary hover:bg-surface transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#6C63FF]">
+                    <i data-lucide="sun" class="w-6 h-6 sun-icon stroke-[1.5]"></i>
+                    <i data-lucide="moon" class="w-6 h-6 moon-icon hidden stroke-[1.5]"></i>
+                </button>
+
+                <!-- Mobile Hamburger Button -->
+                <button id="mobile-menu-button" aria-controls="mobile-menu" aria-expanded="false" class="lg:hidden p-2 rounded-xl text-primary hover:bg-surface transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#6C63FF]">
+                    <i data-lucide="menu" class="w-6 h-6 stroke-[1.5]"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu (Off-Canvas/Modal) -->
+    <div id="mobile-menu" class="fixed inset-0 z-50 bg-black bg-opacity-70 hidden transition-opacity duration-300" role="dialog" aria-modal="true" aria-labelledby="mobile-menu-title" tabindex="-1">
+        <div class="absolute right-0 top-0 h-full w-64 bg-surface dark-glow shadow-xl transition-transform duration-300 transform translate-x-full">
+            <div class="p-6 flex flex-col space-y-6">
+                <button id="close-menu-button" aria-label="Close menu" class="self-end p-2 text-primary hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full focus:outline-none focus:ring-2 focus:ring-[#6C63FF]">
+                    <i data-lucide="x" class="w-6 h-6 stroke-[1.5]"></i>
+                </button>
+                <h2 id="mobile-menu-title" class="sr-only">Main Navigation</h2>
+                <nav class="flex flex-col space-y-6 font-heading font-medium" aria-label="Mobile navigation">
+                    <a href="#hero" class="mobile-nav-link text-primary hover:text-[#6C63FF] transition-colors duration-200 text-xl">Home</a>
+                    <a href="#about" class="mobile-nav-link text-primary hover:text-[#6C63FF] transition-colors duration-200 text-xl">About</a>
+                    <a href="#skills" class="mobile-nav-link text-primary hover:text-[#6C63FF] transition-colors duration-200 text-xl">Skills</a>
+                    <a href="#experience" class="mobile-nav-link text-primary hover:text-[#6C63FF] transition-colors duration-200 text-xl">Experience</a>
+                    <a href="#projects" class="mobile-nav-link text-primary hover:text-[#6C63FF] transition-colors duration-200 text-xl">Projects</a>
+                    <a href="#contact" class="mobile-nav-link text-primary hover:text-[#6C63FF] transition-colors duration-200 text-xl">Contact</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+    
+    <main class="pt-20"> <!-- Ensure content starts below the sticky header -->
+        
+        <!-- 1) #hero Section (Centered Neo Minimal) -->
+        <section id="hero" class="scroll-offset relative overflow-hidden transition-colors duration-500 min-h-screen flex items-center justify-center pt-24 pb-24">
+            
+            <!-- Background Decoration Blobs -->
+            <div class="hero-blob-1 hidden md:block"></div>
+            <div class="hero-blob-2 hidden md:block"></div>
+            
+            <div class="max-w-4xl mx-auto px-6 lg:px-8 w-full text-center">
+                
+                <!-- Text Content (Centered Block) -->
+                <div class="animate-fade-in" data-delay="0">
+                    <p class="text-xl font-heading text-secondary mb-3 tracking-wider font-medium">Hello, I am a</p>
+                    <h1 class="text-5xl xs:text-7xl md:text-8xl font-heading font-extrabold mb-4 text-primary leading-tight">
+                        Hi, I’m <span class="accent-text">Fahimul Islam Fahim</span>
+                    </h1>
+                    <h2 class="text-3xl md:text-5xl font-heading font-semibold mb-8 text-secondary">
+                        WordPress Developer
+                    </h2>
+                    <p class="text-xl text-secondary mb-12 max-w-3xl mx-auto leading-loose">
+                        I design and build modern, fast, and conversion-focused WordPress websites, turning ideas into high-performance digital experiences. Let's create something powerful.
+                    </p>
+                    
+                    <!-- CTAs (Centered below text) -->
+                    <div class="flex flex-col xs:flex-row space-y-4 xs:space-y-0 xs:space-x-6 justify-center">
+                        <a href="#contact" class="px-10 py-4 rounded-xl text-white font-bold text-lg text-center accent-bg shadow-lg shadow-indigo-500/30 transition-transform duration-300 hover:scale-[1.03] focus:outline-none focus:ring-4 focus:ring-[#6C63FF] focus:ring-opacity-50">
+                            Hire Me
+                        </a>
+                        <a href="#projects" class="px-10 py-4 rounded-xl border-2 border-primary text-primary font-bold text-lg text-center transition-colors duration-300 hover:bg-surface hover:border-[#6C63FF] focus:outline-none focus:ring-2 focus:ring-[#6C63FF]">
+                            View Projects
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 2) #about Section -->
+        <section id="about" class="scroll-offset py-32 md:py-48 bg-surface transition-colors duration-500 border-t border-b border-border-color">
+            <div class="max-w-7xl mx-auto px-6 lg:px-8">
+                <header class="text-center mb-24 animate-fade-in" data-delay="0">
+                    <h3 class="text-lg font-heading font-semibold accent-text mb-3 uppercase tracking-widest">Who I Am</h3>
+                    <h2 class="text-4xl md:text-5xl font-heading font-bold text-primary">About Me & My Value</h2>
+                </header>
+
+                <div class="flex flex-col lg:flex-row items-center gap-16 lg:gap-20">
+                    <!-- Profile Image -->
+                    <div class="w-full lg:w-1/3 flex justify-center animate-fade-in" data-delay="100">
+                        <img src="https://placehold.co/320x320/F8F8F8/111111/png?text=Profile+Pic" 
+                             alt="Fahimul Islam Fahim profile picture" 
+                             loading="lazy"
+                             class="w-80 h-80 object-cover rounded-full shadow-xl transition-all duration-500 border-4 border-white dark:border-[#121212] card-shadow"
+                        >
+                    </div>
+
+                    <!-- Bio Content -->
+                    <div class="w-full lg:w-2/3 space-y-6 text-lg text-secondary animate-fade-in" data-delay="200">
+                        <p class="leading-loose">
+                            I'm Fahimul Islam Fahim, a dedicated **WordPress Developer** with a passion for building clean, efficient, and user-centric websites. My core focus is on delivering projects that are not just aesthetically pleasing, but are fundamentally fast and optimized for conversion.
+                        </p>
+                        <p class="leading-loose">
+                            My value proposition lies in bridging the gap between design aspiration and technical implementation. I specialize in the modern WordPress ecosystem, utilizing powerful tools like **Elementor, Divi & WPBakery** to create custom layouts without sacrificing speed. I ensure every site I build follows best practices for **speed optimization** and **SEO basics**, guaranteeing a strong foundation for your digital success.
+                        </p>
+                        <p class="font-semibold text-primary leading-loose">
+                            Let's collaborate to elevate your online presence with a website that truly works for your business.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3) #skills Section (Updated to single consolidated grid) -->
+        <section id="skills" class="scroll-offset py-32 md:py-48 transition-colors duration-500">
+            <div class="max-w-7xl mx-auto px-6 lg:px-8">
+                <header class="text-center mb-24 animate-fade-in" data-delay="0">
+                    <h3 class="text-lg font-heading font-semibold accent-text mb-3 uppercase tracking-widest">My Toolbox</h3>
+                    <h2 class="text-4xl md:text-5xl font-heading font-bold text-primary">Core Skills & Expertise</h2>
+                </header>
+
+                <!-- Consolidated Grid (9 skills) -->
+                <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-8">
+                    
+                    <!-- Skill Card 1: WordPress Development -->
+                    <div class="bg-surface p-8 rounded-xl card-shadow border card-border hover:shadow-lg hover:scale-[1.02] transition-all duration-300 animate-fade-in" data-delay="100">
+                        <i data-lucide="layout-dashboard" class="w-8 h-8 accent-text mb-4 stroke-[2]"></i>
+                        <h4 class="text-xl font-heading font-semibold text-primary mb-2">WordPress Development</h4>
+                        <p class="text-secondary text-base leading-relaxed">Full lifecycle management, custom theme modification, and robust plugin configuration.</p>
+                    </div>
+
+                    <!-- Skill Card 2: Page Builders (Merged) -->
+                    <div class="bg-surface p-8 rounded-xl card-shadow border card-border hover:shadow-lg hover:scale-[1.02] transition-all duration-300 animate-fade-in" data-delay="200">
+                        <i data-lucide="blocks" class="w-8 h-8 accent-text mb-4 stroke-[2]"></i>
+                        <h4 class="text-xl font-heading font-semibold text-primary mb-2">Elementor, Divi & WPBakery</h4>
+                        <p class="text-secondary text-base leading-relaxed">Expert use of the leading visual builders (Elementor, Divi, WPBakery) for custom layouts.</p>
+                    </div>
+
+                    <!-- Skill Card 3: WooCommerce -->
+                    <div class="bg-surface p-8 rounded-xl card-shadow border card-border hover:shadow-lg hover:scale-[1.02] transition-all duration-300 animate-fade-in" data-delay="300">
+                        <i data-lucide="store" class="w-8 h-8 accent-text mb-4 stroke-[2]"></i>
+                        <h4 class="text-xl font-heading font-semibold text-primary mb-2">WooCommerce E-commerce</h4>
+                        <p class="text-secondary text-base leading-relaxed">E-commerce configuration, payment gateway integration, and specialized store setup.</p>
+                    </div>
+                    
+                    <!-- Skill Card 4: HTML, CSS, JS -->
+                    <div class="bg-surface p-8 rounded-xl card-shadow border card-border hover:shadow-lg hover:scale-[1.02] transition-all duration-300 animate-fade-in" data-delay="400">
+                        <i data-lucide="code-xml" class="w-8 h-8 accent-text mb-4 stroke-[2]"></i>
+                        <h4 class="text-xl font-heading font-semibold text-primary mb-2">HTML, CSS, JavaScript</h4>
+                        <p class="text-secondary text-base leading-relaxed">Solid foundation for customizing front-end elements and solving unique styling challenges.</p>
+                    </div>
+
+                    <!-- Skill Card 5: CPT & ACF -->
+                    <div class="bg-surface p-8 rounded-xl card-shadow border card-border hover:shadow-lg hover:scale-[1.02] transition-all duration-300 animate-fade-in" data-delay="500">
+                        <i data-lucide="database" class="w-8 h-8 accent-text mb-4 stroke-[2]"></i>
+                        <h4 class="text-xl font-heading font-semibold text-primary mb-2">CPT & Advanced Custom Fields</h4>
+                        <p class="text-secondary text-base leading-relaxed">Structuring complex data (Custom Post Types) and creating custom content interfaces (ACF).</p>
+                    </div>
+
+                    <!-- Skill Card 6: UI/UX & Figma -->
+                    <div class="bg-surface p-8 rounded-xl card-shadow border card-border hover:shadow-lg hover:scale-[1.02] transition-all duration-300 animate-fade-in" data-delay="600">
+                        <i data-lucide="eye" class="w-8 h-8 accent-text mb-4 stroke-[2]"></i>
+                        <h4 class="text-xl font-heading font-semibold text-primary mb-2">UI/UX & Figma Understanding</h4>
+                        <p class="text-secondary text-base leading-relaxed">Translating design principles (Figma/Sketch) into intuitive and conversion-focused interfaces.</p>
+                    </div>
+
+                    <!-- Skill Card 7: Responsive Design -->
+                    <div class="bg-surface p-8 rounded-xl card-shadow border card-border hover:shadow-lg hover:scale-[1.02] transition-all duration-300 animate-fade-in" data-delay="700">
+                        <i data-lucide="smartphone" class="w-8 h-8 accent-text mb-4 stroke-[2]"></i>
+                        <h4 class="text-xl font-heading font-semibold text-primary mb-2">Responsive Design</h4>
+                        <p class="text-secondary text-base leading-relaxed">Ensuring flawless and accessible user experience across all devices (mobile, tablet, desktop).</p>
+                    </div>
+
+                    <!-- Skill Card 8: Security, Performance & SEO -->
+                    <div class="bg-surface p-8 rounded-xl card-shadow border card-border hover:shadow-lg hover:scale-[1.02] transition-all duration-300 animate-fade-in" data-delay="800">
+                        <i data-lucide="shield-check" class="w-8 h-8 accent-text mb-4 stroke-[2]"></i>
+                        <h4 class="text-xl font-heading font-semibold text-primary mb-2">Security, Performance & SEO</h4>
+                        <p class="text-secondary text-base leading-relaxed">Implementing caching, optimization, hardening measures, and basic on-page SEO best practices.</p>
+                    </div>
+
+                    <!-- Skill Card 9: Hosting / Domain Handling -->
+                    <div class="bg-surface p-8 rounded-xl card-shadow border card-border hover:shadow-lg hover:scale-[1.02] transition-all duration-300 animate-fade-in" data-delay="900">
+                        <i data-lucide="server" class="w-8 h-8 accent-text mb-4 stroke-[2]"></i>
+                        <h4 class="text-xl font-heading font-semibold text-primary mb-2">CPanel / Hosting / Domain</h4>
+                        <p class="text-secondary text-base leading-relaxed">End-to-end domain connection, hosting management (CPanel), and migration expertise.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4) #experience Section (Vertical Timeline) -->
+        <section id="experience" class="scroll-offset py-32 md:py-48 bg-surface transition-colors duration-500 border-t border-b border-border-color">
+            <div class="max-w-7xl mx-auto px-6 lg:px-8">
+                <header class="text-center mb-24 animate-fade-in" data-delay="0">
+                    <h3 class="text-lg font-heading font-semibold accent-text mb-3 uppercase tracking-widest">My Journey</h3>
+                    <h2 class="text-4xl md:text-5xl font-heading font-bold text-primary">Professional Experience</h2>
+                </header>
+
+                <div class="relative max-w-4xl mx-auto">
+                    <!-- Vertical Line (Minimalist) -->
+                    <div class="absolute left-4 top-0 bottom-0 w-px card-border md:left-1/2 md:-translate-x-1/2"></div>
+                    
+                    <!-- Experience Item 1 -->
+                    <div class="mb-16 flex flex-col md:flex-row justify-between md:odd:flex-row-reverse relative animate-fade-in" data-delay="100">
+                        <!-- Timeline Point (Minimalist marker) -->
+                        <div class="absolute left-3 top-2 w-3 h-3 rounded-full accent-bg border-2 border-white dark:border-[#121212] z-10 md:left-1/2 md:-translate-x-1/2"></div>
+                        
+                        <!-- Content Card (Light color in light mode, dark color in dark mode) -->
+                        <div class="md:w-5/12 p-8 rounded-xl card-shadow bg-white dark:bg-gray-900 ml-8 md:ml-0 border card-border">
+                            <p class="text-sm font-semibold text-secondary">2021 — Present</p>
+                            <h4 class="text-xl font-heading font-bold text-primary mt-1">Lead WordPress Developer</h4>
+                            <p class="text-md accent-text mb-4 font-medium">Creative Solutions Agency</p>
+                            <ul class="list-disc ml-5 text-secondary space-y-2 text-base leading-relaxed">
+                                <li>Managed the complete lifecycle of 20+ client websites, focusing on optimization and performance.</li>
+                                <li>Implemented custom WooCommerce features resulting in a 15% increase in client e-commerce conversions.</li>
+                                <li>Mentored junior developers on best practices for responsive design and security.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Experience Item 2 -->
+                    <div class="mb-16 flex flex-col md:flex-row justify-between md:odd:flex-row-reverse relative animate-fade-in" data-delay="300">
+                        <!-- Timeline Point -->
+                        <div class="absolute left-3 top-2 w-3 h-3 rounded-full accent-bg border-2 border-white dark:border-[#121212] z-10 md:left-1/2 md:-translate-x-1/2"></div>
+                        
+                        <!-- Content Card (Light color in light mode, dark color in dark mode) -->
+                        <div class="md:w-5/12 p-8 rounded-xl card-shadow bg-white dark:bg-gray-900 ml-8 md:ml-0 border card-border">
+                            <p class="text-sm font-semibold text-secondary">2019 — 2021</p>
+                            <h4 class="text-xl font-heading font-bold text-primary mt-1">Junior Web Designer</h4>
+                            <p class="text-md accent-text mb-4 font-medium">Digital Marketing Hub</p>
+                            <ul class="list-disc ml-5 text-secondary space-y-2 text-base leading-relaxed">
+                                <li>Assisted in building landing pages and campaign sites using Elementor Pro.</li>
+                                <li>Gained foundational experience in site staging, deployment, and basic server management.</li>
+                                <li>Contributed to team discussions on mobile-first design principles.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5) #projects Section -->
+        <section id="projects" class="scroll-offset py-32 md:py-48 transition-colors duration-500">
+            <div class="max-w-7xl mx-auto px-6 lg:px-8">
+                <header class="text-center mb-24 animate-fade-in" data-delay="0">
+                    <h3 class="text-lg font-heading font-semibold accent-text mb-3 uppercase tracking-widest">Showcase</h3>
+                    <h2 class="text-4xl md:text-5xl font-heading font-bold text-primary">Featured Projects</h2>
+                </header>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+
+                    <!-- Project Card 1 (Light color in light mode, dark color in dark mode) -->
+                    <div class="rounded-xl card-shadow overflow-hidden bg-white dark:bg-gray-900 border card-border transform hover:scale-[1.03] transition-all duration-500 group animate-fade-in" data-delay="100">
+                        <img src="https://placehold.co/600x400/F8F8F8/111111/png?text=E-commerce+Redesign" 
+                             alt="Screenshot of an E-commerce store redesign" 
+                             loading="lazy"
+                             class="w-full h-48 object-cover group-hover:opacity-80 transition-opacity duration-300"
+                        >
+                        <div class="p-6">
+                            <h4 class="text-2xl font-heading font-bold text-primary mb-2">E-commerce Accelerator</h4>
+                            <p class="text-secondary mb-4 text-base leading-relaxed">A high-speed WooCommerce redesign focused entirely on conversion rate optimization.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="text-xs font-medium px-3 py-1 rounded-full bg-[#E0E0FF] accent-text dark:bg-gray-800">WooCommerce</span>
+                                <span class="text-xs font-medium px-3 py-1 rounded-full bg-[#E0E0FF] accent-text dark:bg-gray-800">Speed Opt.</span>
+                                <span class="text-xs font-medium px-3 py-1 rounded-full bg-[#E0E0FF] accent-text dark:bg-gray-800">Elementor</span>
+                            </div>
+                            <a href="#" target="_blank" class="accent-text hover:underline flex items-center font-medium">
+                                View Live <i data-lucide="arrow-right" class="w-4 h-4 ml-2 stroke-[2]"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Project Card 2 (Light color in light mode, dark color in dark mode) -->
+                    <div class="rounded-xl card-shadow overflow-hidden bg-white dark:bg-gray-900 border card-border transform hover:scale-[1.03] transition-all duration-500 group animate-fade-in" data-delay="200">
+                        <img src="https://placehold.co/600x400/F8F8F8/111111/png?text=Corporate+Site+Build" 
+                             alt="Screenshot of a corporate business website" 
+                             loading="lazy"
+                             class="w-full h-48 object-cover group-hover:opacity-80 transition-opacity duration-300"
+                        >
+                        <div class="p-6">
+                            <h4 class="text-2xl font-heading font-bold text-primary mb-2">Corporate Brochure Site</h4>
+                            <p class="text-secondary mb-4 text-base leading-relaxed">A sophisticated corporate site built with custom blocks for easy content management.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="text-xs font-medium px-3 py-1 rounded-full bg-[#E0E0FF] accent-text dark:bg-gray-800">Custom Blocks</span>
+                                <span class="text-xs font-medium px-3 py-1 rounded-full bg-[#E0E0FF] accent-text dark:bg-gray-800">Custom CSS</span>
+                                <span class="text-xs font-medium px-3 py-1 rounded-full bg-[#E0E0FF] accent-text dark:bg-gray-800">Responsive</span>
+                            </div>
+                            <a href="#" target="_blank" class="accent-text hover:underline flex items-center font-medium">
+                                View Live <i data-lucide="arrow-right" class="w-4 h-4 ml-2 stroke-[2]"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Project Card 3 (Light color in light mode, dark color in dark mode) -->
+                    <div class="rounded-xl card-shadow overflow-hidden bg-white dark:bg-gray-900 border card-border transform hover:scale-[1.03] transition-all duration-500 group animate-fade-in" data-delay="300">
+                        <img src="https://placehold.co/600x400/F8F8F8/111111/png?text=Service+Landing+Page" 
+                             alt="Screenshot of a marketing landing page" 
+                             loading="lazy"
+                             class="w-full h-48 object-cover group-hover:opacity-80 transition-opacity duration-300"
+                        >
+                        <div class="p-6">
+                            <h4 class="text-2xl font-heading font-bold text-primary mb-2">High-Converting Landing Page</h4>
+                            <p class="text-secondary mb-4 text-base leading-relaxed">A targeted landing page designed for specific marketing campaigns and lead generation.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="text-xs font-medium px-3 py-1 rounded-full bg-[#E0E0FF] accent-text dark:bg-gray-800">UI/UX Focus</span>
+                                <span class="text-xs font-medium px-3 py-1 rounded-full bg-[#E0E0FF] accent-text dark:bg-gray-800">Elementor</span>
+                                <span class="text-xs font-medium px-3 py-1 rounded-full bg-[#E0E0FF] accent-text dark:bg-gray-800">A/B Testing Ready</span>
+                            </div>
+                            <a href="#" target="_blank" class="accent-text hover:underline flex items-center font-medium">
+                                View Live <i data-lucide="arrow-right" class="w-4 h-4 ml-2 stroke-[2]"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6) #contact Section (Updated to use contact links only) -->
+        <section id="contact" class="scroll-offset py-32 md:py-48 transition-colors duration-500 relative overflow-hidden">
+            <div class="max-w-7xl mx-auto px-6 lg:px-8">
+                <header class="text-center mb-24 animate-fade-in" data-delay="0">
+                    <h3 class="text-lg font-heading font-semibold accent-text mb-3 uppercase tracking-widest">Get In Touch</h3>
+                    <h2 class="text-4xl md:text-5xl font-heading font-bold text-primary">Let's Connect Directly</h2>
+                    <p class="text-xl text-secondary mt-4">Available for freelance & remote projects.</p>
+                </header>
+
+                <div class="max-w-3xl mx-auto bg-surface p-10 md:p-16 rounded-xl card-shadow border card-border animate-fade-in" data-delay="100">
+                    
+                    <div class="space-y-10">
+                        <!-- Direct Contact Info -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                            
+                            <!-- Email -->
+                            <div class="flex flex-col items-center group">
+                                <i data-lucide="mail" class="w-8 h-8 accent-text mb-3 stroke-[2]"></i>
+                                <h4 class="text-lg font-heading font-semibold text-primary mb-1">Email Address</h4>
+                                <a href="mailto:austfahim@gmail.com" class="text-secondary hover:accent-text transition-colors duration-200 text-base font-medium" aria-label="Send email to austfahim@gmail.com">
+                                    austfahim@gmail.com
+                                </a>
+                            </div>
+
+                            <!-- WhatsApp / Phone -->
+                            <div class="flex flex-col items-center group">
+                                <i data-lucide="phone" class="w-8 h-8 accent-text mb-3 stroke-[2]"></i>
+                                <h4 class="text-lg font-heading font-semibold text-primary mb-1">WhatsApp Chat</h4>
+                                <a href="https://wa.me/8801721214554" target="_blank" class="text-secondary hover:accent-text transition-colors duration-200 text-base font-medium" aria-label="Chat on WhatsApp +8801721214554">
+                                    +8801721214554
+                                </a>
+                            </div>
+
+                            <!-- LinkedIn -->
+                            <div class="flex flex-col items-center group">
+                                <i data-lucide="linkedin" class="w-8 h-8 accent-text mb-3 stroke-[2]"></i>
+                                <h4 class="text-lg font-heading font-semibold text-primary mb-1">LinkedIn Profile</h4>
+                                <a href="https://www.linkedin.com/in/fahimulislamfahim/" target="_blank" class="text-secondary hover:accent-text transition-colors duration-200 text-base font-medium" aria-label="View LinkedIn profile">
+                                    /in/fahimulislamfahim
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="border-t card-border pt-10 mt-10">
+                            <h4 class="text-xl font-heading font-semibold text-primary mb-6 text-center">Other Social Channels</h4>
+                            <div class="flex justify-center space-x-8">
+                                <a href="https://www.linkedin.com/in/fahimulislamfahim/" target="_blank" aria-label="LinkedIn profile" class="text-secondary hover:accent-text transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#6C63FF] rounded-full p-2">
+                                    <i data-lucide="linkedin" class="w-7 h-7 stroke-[2]"></i>
+                                </a>
+                                <a href="https://www.facebook.com" target="_blank" aria-label="Facebook profile" class="text-secondary hover:accent-text transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#6C63FF] rounded-full p-2">
+                                    <i data-lucide="facebook" class="w-7 h-7 stroke-[2]"></i>
+                                </a>
+                                <a href="https://www.instagram.com" target="_blank" aria-label="Instagram profile" class="text-secondary hover:accent-text transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#6C63FF] rounded-full p-2">
+                                    <i data-lucide="instagram" class="w-7 h-7 stroke-[2]"></i>
+                                </a>
+                                <a href="https://wa.me/8801721214554?text=Hi%20Fahim%2C%20I%27m%20interested%20in%20a%20website." target="_blank" aria-label="Chat on WhatsApp" class="text-secondary hover:accent-text transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#6C63FF] rounded-full p-2">
+                                    <i class="fab fa-whatsapp w-7 h-7 text-3xl"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+    </main>
+
+    <!-- Floating Social Links -->
+    <nav class="floating-social-bar hidden lg:flex flex-col" aria-label="Floating Social Links">
+        <a href="https://www.linkedin.com/in/fahimulislamfahim/" target="_blank" rel="noopener noreferrer" 
+           aria-label="LinkedIn Profile" class="social-link border-b card-border">
+            <i data-lucide="linkedin" class="w-6 h-6 stroke-[2]"></i>
+        </a>
+        <a href="https://wa.me/8801721214554?text=Hi%20Fahim%2C%20I%27m%20interested%20in%20a%20website." target="_blank" rel="noopener noreferrer" 
+           aria-label="Chat on WhatsApp" class="social-link border-b card-border">
+            <i class="fab fa-whatsapp w-6 h-6 text-2xl"></i>
+        </a>
+        <a href="mailto:austfahim@gmail.com" 
+           aria-label="Send Email" class="social-link">
+            <i data-lucide="mail" class="w-6 h-6 stroke-[2]"></i>
+        </a>
+    </nav>
+
+    <!-- Footer -->
+    <footer class="py-10 bg-surface border-t card-border text-center text-secondary text-sm transition-colors duration-500">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <p>&copy; 2024 Fahimul Islam Fahim. All rights reserved. | Built with modern WordPress principles.</p>
+        </div>
+    </footer>
+
+    <script>
+        const html = document.documentElement;
+        const body = document.body;
+        const toggleButton = document.getElementById('theme-toggle');
+        const sunIcon = document.querySelector('.sun-icon');
+        const moonIcon = document.querySelector('.moon-icon');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const closeMenuButton = document.getElementById('close-menu-button');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+        const menuDrawer = mobileMenu.querySelector('div');
+
+
+        // ----------------------------------------------------
+        // 1. THEME SWITCHING & PERSISTENCE
+        // ----------------------------------------------------
+        function applyTheme(theme) {
+            html.classList.remove('light', 'dark');
+            html.classList.add(theme);
+            localStorage.setItem('theme', theme);
+
+            // Update icon visibility
+            if (theme === 'dark') {
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
+                document.getElementById('header').classList.remove('header-bg');
+                document.getElementById('header').classList.add('dark:bg-[#121212]');
+            } else {
+                sunIcon.classList.remove('hidden');
+                moonIcon.classList.add('hidden');
+                document.getElementById('header').classList.remove('dark:bg-[#121212]');
+                document.getElementById('header').classList.add('header-bg');
+            }
+        }
+
+        function toggleTheme() {
+            const newTheme = html.classList.contains('light') ? 'dark' : 'light';
+            applyTheme(newTheme);
+        }
+
+        function initializeTheme() {
+            // Priority 1: Check localStorage (Persistence)
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                applyTheme(savedTheme);
+                return;
+            }
+
+            // Priority 2: Default to LIGHT as required
+            applyTheme('light');
+        }
+
+        toggleButton.addEventListener('click', toggleTheme);
+
+
+        // ----------------------------------------------------
+        // 2. MOBILE MENU (Hamburger & Focus Trap)
+        // ----------------------------------------------------
+        function openMenu() {
+            mobileMenu.classList.remove('hidden');
+            setTimeout(() => {
+                menuDrawer.classList.remove('translate-x-full');
+                menuDrawer.focus();
+            }, 10);
+            mobileMenuButton.setAttribute('aria-expanded', 'true');
+            body.style.overflow = 'hidden';
+        }
+
+        function closeMenu() {
+            menuDrawer.classList.add('translate-x-full');
+            menuDrawer.addEventListener('transitionend', function handler() {
+                mobileMenu.classList.add('hidden');
+                menuDrawer.removeEventListener('transitionend', handler);
+            }, { once: true });
+            mobileMenuButton.setAttribute('aria-expanded', 'false');
+            body.style.overflow = '';
+        }
+
+        mobileMenuButton.addEventListener('click', openMenu);
+        closeMenuButton.addEventListener('click', closeMenu);
+
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !mobileMenu.classList.contains('hidden')) {
+                closeMenu();
+            }
+        });
+
+
+        // ----------------------------------------------------
+        // 3. INTERSECTION OBSERVER & ANIMATIONS
+        // ----------------------------------------------------
+        function initializeAnimations() {
+            const elements = document.querySelectorAll('.animate-fade-in');
+            const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            if (reducedMotion) {
+                elements.forEach(el => el.classList.add('animate-in-view'));
+                return;
+            }
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const delay = parseInt(entry.target.getAttribute('data-delay') || 0);
+                        setTimeout(() => {
+                            entry.target.classList.add('animate-in-view');
+                        }, delay);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+            elements.forEach(el => {
+                observer.observe(el);
+            });
+        }
+        
+        window.addEventListener('load', function() {
+            // Initialize Lucide icons
+            lucide.createIcons();
+            // Initialize Theme
+            initializeTheme();
+            // Initialize Animations
+            initializeAnimations();
+        });
+        
+    </script>
+
+</body>
+</html>
